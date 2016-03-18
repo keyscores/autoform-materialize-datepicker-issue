@@ -1,31 +1,40 @@
 if (Meteor.isClient) {
-  // counter starts at 0
 
-  Session.setDefault('counter', 0);
+  Session.setDefault('doc', 0);
 
   Template.hello.helpers({
-    counter: function () {
-      return Session.get('counter');
-    },
     doc: function(){
-      return Sales.find().fetch()[0]
+      return Sales.find().fetch()[ Session.get('doc') ]
     }
   });
 
   Template.hello.events({
-    'click button': function () {
-      // increment the counter when button is clicked
-      Session.set('counter', Session.get('counter') + 1);
+    'click .change': function () {
+      console.log("changed");
+
+      if (Session.get('doc') == 1) {
+        Session.set('doc', 0 );
+      } else {
+        Session.set('doc', 1 );
+      }
     }
   });
 }
 
 if (Meteor.isServer) {
   Meteor.startup(function(){
-    Sales.upsert({
-      productNum: 10
-      date : 1458313442673
-      subproducts: { value: 1, timeStamp: 1458313442673}
+    Sales.remove({});
+
+    Sales.insert({
+      productNum: 9999,
+      date : 1458313442673,
+      subproducts: [{ value: 1, timeStamp: 1458313442673}]
+    });
+
+    Sales.insert({
+      productNum: 10,
+      date : 1358313441673,
+      subproducts: [{ value: 999, timeStamp: 1358313441673}]
     });
   });
 }

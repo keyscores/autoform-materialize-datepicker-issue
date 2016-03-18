@@ -3,12 +3,22 @@
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
-
   {{> hello}}
 </body>
 
 <template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+  <div class="container">
+    <p> On pageload or refresh the dates below are formatted correctly.</p>
+    <p> However, when you click 'Change Record' we can reactively change the
+      document of the form, without a refresh, or re-render. And the dates will not be formatted correctly.
+
+    </p>
+    <p>
+      This is a problem because records cannot be changed, and you get a "Sale Date is required" unless the format is as specified.
+    </p>
+    <button class="change"> Change Record </button>
+      <div style="width:20%">
+        {{> quickForm id="update" type = "update" doc = doc collection="Sales"}}
+      </div>
+  </div>
 </template>
